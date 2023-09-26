@@ -1,0 +1,36 @@
+{
+  "name": "monster-mash-parade",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint --ext .js --ext .jsx src/ --fix",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "dotenv": "^16.3.1",
+    "lil-gui": "^0.18.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.156.1",
+    "vite-plugin-glsl": "^1.1.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.3",
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.1.0",
+    "dotenv": "^16.3.1",
+    "eslint": "^8.50.0",
+    "eslint-plugin-react": "^7.33.2",
+    "jsdom": "^22.1.0",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.5"
+  }
+}
