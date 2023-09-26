@@ -59,9 +59,6 @@ export function App() {
     // Scene
     const scene = new THREE.Scene();
 
-    // Texture loader
-    const textureLoader = new THREE.TextureLoader();
-
     // GLTF loader
     const gltfLoader = new GLTFLoader();
 
