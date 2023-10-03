@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import React, { useEffect, useRef } from "react";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { MeshSurfaceSampler } from "three/addons/math/MeshSurfaceSampler.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import styled from "@emotion/styled";
 
@@ -91,19 +92,55 @@ export function App() {
       mixers.push(mixer);
       const objs = [];
 
+      let vegetationArea = null;
+      const vegetations = [];
       model.traverse((child) => {
         if (child.isMesh) {
           child.castShadow = true;
           if (child.name === "Platform" || child.name === "Sandpath" || child.name === "Stonepath") {
             child.receiveShadow = true;
           }
-          objs.push(child);
+          if (child.name === "VegetationArea") {
+            vegetationArea = child;
+          } else if (
+            child.name === "Grass" ||
+            child.name === "Flower001" ||
+            child.name === "Flower002" ||
+            child.name === "Flower003"
+          ) {
+            vegetations.push(child);
+            if (child.name === "Grass") {
+              vegetations.push(child);
+            }
+          } else {
+            objs.push(child);
+          }
         } else if (child.isLight) {
           lights.push(child);
         }
       });
-
       scene.add(...objs);
+
+      for (const obj of vegetations) {
+        const n = 80;
+        const sampler = new MeshSurfaceSampler(vegetationArea).build();
+        const mesh = new THREE.InstancedMesh(obj.geometry, obj.material, n);
+        mesh.castShadow = true;
+        const position = new THREE.Vector3();
+        const matrixS = new THREE.Matrix4();
+        matrixS.makeScale(0.2, 0.2, 0.2);
+        const matrixT = new THREE.Matrix4();
+        const matrixR = new THREE.Matrix4();
+        for (let i = 0; i < n; i++) {
+          sampler.sample(position);
+          matrixT.makeTranslation(position.x, 0.0, position.z);
+          matrixR.makeRotationY(0.25 * (Math.random() * 2 - 1) * Math.PI);
+          matrixT.multiply(matrixR);
+          matrixT.multiply(matrixS);
+          mesh.setMatrixAt(i, matrixT);
+        }
+        scene.add(mesh);
+      }
 
       for (let i = 0; i < lights.length; i++) {
         const light = lights[i];
