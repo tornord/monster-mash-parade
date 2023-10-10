@@ -146,10 +146,13 @@ export function App() {
         const light = lights[i];
         light.intensity = i !== 2 ? 600 : 400;
         light.castShadow = true;
-        light.shadow.radius = 4;
+        light.shadow.radius = 5;
         light.shadow.mapSize.width = 2048;
         light.shadow.mapSize.height = 2048;
+        // light.shadow.normalBias = 0.1;
+        // light.shadow.bias = 0.001;
         scene.add(light);
+        // const lh = new THREE.DirectionalLightHelper(light, 1);
       }
     });
 
