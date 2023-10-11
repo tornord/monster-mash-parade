@@ -1,2 +1,3 @@
 # monster-mash-parade
-Demo site for https://monstermash.zone/ creations
+Parade of https://monstermash.zone/ creations
+Demo https://tornord.github.io/monster-mash-parade/
